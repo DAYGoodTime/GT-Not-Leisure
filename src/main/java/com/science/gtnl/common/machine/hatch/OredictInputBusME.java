@@ -129,10 +129,12 @@ public class OredictInputBusME extends MTEHatchInputBusME implements IRecipeProc
             disableSort = true;
         }
     }
+
     @Override
     public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
         return new OredictInputBusME(mName, autoPullAvailable, mTier, mDescriptionArray, mTextures, isSuper);
     }
+
     @Override
     public int getSizeInventory() {
         return SIDE_SLOT_COUNT;
