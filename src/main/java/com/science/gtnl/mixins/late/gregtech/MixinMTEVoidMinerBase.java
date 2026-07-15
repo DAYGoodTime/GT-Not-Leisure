@@ -511,18 +511,19 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
 
         GTNLOverclockCalculator calculator = new GTNLOverclockCalculator().setEUt(getMaxInputEu())
             .setRecipeEUt(Math.abs(Math.toIntExact(GTValues.V[this.getMinTier()])))
-            .setDuration(10 * (batchMode ? 16 : 1))
+            .setDuration(10)
             .setParallel(1);
         if (TIER_MULTIPLIER == 3) calculator = calculator.enablePerfectOC();
         calculator = calculator.calculate();
 
         double parallel = calculator.calculateMultiplierUnderOneTick();
+        double oldParallel = parallel;
         if (batchMode) {
             double multiplierParallel = 128d / calculator.getDuration();
-            parallel = (int) Math.max(1, parallel * multiplierParallel);
+            parallel *= multiplierParallel;
         }
 
-        long totalCount = (long) (multiplier * parallel);
+        long totalCount = (long) Math.floor(multiplier * parallel);
         if (totalCount <= 0) {
             ci.cancel();
             return;
