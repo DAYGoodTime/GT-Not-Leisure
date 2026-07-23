@@ -32,6 +32,7 @@ import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
+@IMetaTileEntity.SkipGenerateDescription
 public class LargeMacerationTower extends GTMMultiMachineBase<LargeMacerationTower> implements ISurvivalConstructable {
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
@@ -147,7 +148,7 @@ public class LargeMacerationTower extends GTMMultiMachineBase<LargeMacerationTow
 
     @Override
     public double getDurationModifier() {
-        return 1.0 / 2.0 - (Math.max(0, mParallelTier - 1) / 50.0);
+        return 1.0 / 4.0 - (Math.max(0, mParallelTier - 1) / 50.0);
     }
 
     @Override

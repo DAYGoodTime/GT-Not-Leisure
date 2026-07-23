@@ -44,6 +44,7 @@ import gregtech.common.gui.modularui.multiblock.base.MTEMultiBlockBaseGui;
 import gtPlusPlus.api.recipe.GTPPRecipeMaps;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
+@IMetaTileEntity.SkipGenerateDescription
 public class LargeCentrifuge extends GTMMultiMachineBase<LargeCentrifuge> implements ISurvivalConstructable {
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
@@ -128,7 +129,7 @@ public class LargeCentrifuge extends GTMMultiMachineBase<LargeCentrifuge> implem
 
     @Override
     public double getDurationModifier() {
-        return 1.0 / 2.6 - (Math.max(0, mParallelTier - 1) / 50.0);
+        return 1.0 / 3.4 - (Math.max(0, mParallelTier - 1) / 50.0);
     }
 
     @Override

@@ -219,14 +219,14 @@ public class AssemblerRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Hull_EV.get(1L),
-                ItemList.Robot_Arm_EV.get(16L),
+                ItemList.Robot_Arm_EV.get(10L),
                 ItemList.Conveyor_Module_EV.get(4L),
                 ItemList.Electric_Motor_EV.get(4L),
                 GTOreDictUnificator.get(OrePrefixes.cableGt01, Materials.Aluminium, 32),
-                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.EV, 8L),
+                GTOreDictUnificator.get(OrePrefixes.circuit, Materials.EV, 12L),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.IV, 4L),
                 ItemList.Casing_StableTitanium.get(4L),
-                GregtechItemList.GTPP_Casing_EV.get(8L))
+                GregtechItemList.GTPP_Casing_EV.get(6L))
             .fluidInputs(SubstituteFluidStack.soldering(18432))
             .itemOutputs(GTNLItemList.ProcessingArray.get(1))
             .duration(600)

@@ -49,6 +49,7 @@ import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.misc.GTStructureChannels;
 
+@IMetaTileEntity.SkipGenerateDescription
 public class ElectricBlastFurnace extends MultiMachineBase<ElectricBlastFurnace> implements ISurvivalConstructable {
 
     private static final String STRUCTURE_PIECE_MAIN = "main";
@@ -183,7 +184,7 @@ public class ElectricBlastFurnace extends MultiMachineBase<ElectricBlastFurnace>
 
     @Override
     public double getEUtDiscount() {
-        return 0.9 * Math.pow(0.95, getMCoilLevel().getTier());
+        return 0.75 * Math.pow(0.95, getMCoilLevel().getTier());
     }
 
     @Override

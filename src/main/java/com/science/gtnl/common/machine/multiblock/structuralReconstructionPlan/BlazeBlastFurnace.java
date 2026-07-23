@@ -60,6 +60,7 @@ import gregtech.common.misc.GTStructureChannels;
 import gtPlusPlus.core.block.ModBlocks;
 import gtPlusPlus.xmod.gregtech.common.blocks.textures.TexturesGtBlock;
 
+@IMetaTileEntity.SkipGenerateDescription
 public class BlazeBlastFurnace extends MultiMachineBase<BlazeBlastFurnace> implements ISurvivalConstructable {
 
     private static final TranslatableText BLAZE_INPUT_HATCH_NAME = TranslatableText.lang("FluidBlazeInputHatch");
@@ -235,12 +236,12 @@ public class BlazeBlastFurnace extends MultiMachineBase<BlazeBlastFurnace> imple
 
     @Override
     public double getDurationModifier() {
-        return 1.0 / 3;
+        return 1.0 / 4.0;
     }
 
     @Override
     public double getEUtDiscount() {
-        return 0.75;
+        return 0.70;
     }
 
     @Override
