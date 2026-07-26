@@ -311,6 +311,11 @@ public class SuperInputBusME extends MTEHatchInputBusME implements IConfiguratio
     }
 
     @Override
+    public int getSizeInventory() {
+        return SIDE_SLOT_COUNT;
+    }
+
+    @Override
     public ItemStack getStackInSlot(int aIndex) {
         if (!processingRecipe) return super.getStackInSlot(aIndex);
 
