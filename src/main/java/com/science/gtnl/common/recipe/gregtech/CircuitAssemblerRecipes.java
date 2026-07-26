@@ -1,5 +1,6 @@
 package com.science.gtnl.common.recipe.gregtech;
 
+import gtPlusPlus.core.material.MaterialsAlloy;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
@@ -476,6 +477,34 @@ public class CircuitAssemblerRecipes implements IRecipePool {
             .eut(TierEU.RECIPE_LuV)
             .duration(20 * GTRecipeBuilder.SECONDS)
             .requiresCleanRoom()
+            .addTo(CAR);
+
+        RecipeBuilder.builder()
+            .setNEIDesc("Remove Change by GTNotLeisure")
+            .itemInputs(
+                ItemList.Circuit_Board_Fiberglass_Advanced.get(1L),
+                ItemList.Circuit_Chip_SoC2.get(1L),
+                GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Platinum, 8),
+                GTOreDictUnificator.get(OrePrefixes.bolt, Materials.NiobiumTitanium, 8))
+            .fluidInputs(MaterialsAlloy.INDALLOY_140.getFluidStack(288))
+            .itemOutputs(ItemList.Circuit_Quantumprocessor.get(2))
+            .requiresCleanRoom()
+            .duration(100)
+            .eut(TierEU.RECIPE_ZPM)
+            .addTo(CAR);
+
+        RecipeBuilder.builder()
+            .setNEIDesc("Remove Change by GTNotLeisure")
+            .itemInputs(
+                ItemList.Circuit_Board_Epoxy_Advanced.get(1L),
+                ItemList.Circuit_Chip_SoC2.get(1L),
+                GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Electrum, 8),
+                GTOreDictUnificator.get(OrePrefixes.bolt, Materials.Platinum, 8))
+            .fluidInputs(MaterialsAlloy.INDALLOY_140.getFluidStack(288))
+            .itemOutputs(ItemList.Circuit_Nanoprocessor.get(2))
+            .requiresCleanRoom()
+            .duration(100)
+            .eut(TierEU.RECIPE_LuV)
             .addTo(CAR);
 
         loadCircuitRecipes();
