@@ -1,6 +1,5 @@
 package com.science.gtnl.common.recipe.gregtech;
 
-import gtPlusPlus.core.material.MaterialsAlloy;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
@@ -26,6 +25,7 @@ import gregtech.api.util.GTRecipeConstants;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.recipe.Scanning;
 import gtPlusPlus.core.material.MaterialMisc;
+import gtPlusPlus.core.material.MaterialsAlloy;
 import tectech.recipe.TTRecipeAdder;
 import tectech.thing.CustomItemList;
 
