@@ -348,7 +348,7 @@ public class MixerRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(
-                GTUtility.getIntegratedCircuit(1),
+                GTUtility.getIntegratedCircuit(2),
                 GTOreDictUnificator.get(OrePrefixes.dust, Materials.Carbon, 1),
                 MaterialsElements.getInstance().HAFNIUM.getDust(1))
             .itemOutputs(WerkstoffLoader.TantalumHafniumCarbide.get(OrePrefixes.dust, 2))
