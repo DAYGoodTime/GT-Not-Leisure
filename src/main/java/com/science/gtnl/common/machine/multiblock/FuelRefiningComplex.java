@@ -23,11 +23,10 @@ import com.science.gtnl.utils.recipes.GTNLOverclockCalculator;
 import com.science.gtnl.utils.recipes.GTNLProcessingLogic;
 import com.science.gtnl.utils.recipes.metadata.FuelRefiningMetadata;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import gregtech.api.GregTechAPI;
 import gregtech.api.enums.HatchElement;
+import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
-import gregtech.api.enums.Mods;
 import gregtech.api.enums.TAE;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
@@ -79,9 +78,7 @@ public class FuelRefiningComplex extends GTMMultiMachineBase<FuelRefiningComplex
     public IStructureDefinition<FuelRefiningComplex> getStructureDefinition() {
         return StructureDefinition.<FuelRefiningComplex>builder()
             .addShape(STRUCTURE_PIECE_MAIN, StructureUtility.transpose(shape))
-            .addElement(
-                'A',
-                StructureUtility.ofBlockAnyMeta(GameRegistry.findBlock(Mods.IndustrialCraft2.ID, "blockAlloyGlass")))
+            .addElement('A', StructureUtility.ofBlockAnyMeta(ItemList.ReinforcedGlass.getBlock()))
             .addElement('B', StructureUtility.ofBlockAnyMeta(LanthItemList.ELECTRODE_CASING))
             .addElement('C', StructureUtility.ofBlock(GregTechAPI.sBlockCasings2, 5))
             .addElement('D', StructureUtility.ofBlock(GregTechAPI.sBlockCasings4, 0))
