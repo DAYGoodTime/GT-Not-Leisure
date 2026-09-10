@@ -353,7 +353,8 @@ public class GTNLControllerUpgradePanels {
 
     private ItemStack getUpgradeItem(boolean currentPanel, int displayPage, int itemIndex) {
         ItemStack[] upgradeItems = getUpgradeItems(currentPanel, displayPage);
-        return itemIndex < upgradeItems.length ? upgradeItems[itemIndex] : null;
+        ItemStack stack = itemIndex < upgradeItems.length ? upgradeItems[itemIndex] : null;
+        return stack == null ? null : stack.copy();
     }
 
     private int[] getUpgradePaidCosts(boolean currentPanel, int displayPage) {
