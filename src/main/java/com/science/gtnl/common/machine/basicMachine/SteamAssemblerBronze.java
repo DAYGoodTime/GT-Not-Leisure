@@ -1,12 +1,5 @@
 package com.science.gtnl.common.machine.basicMachine;
 
-import com.cleanroommc.modularui.factory.PosGuiData;
-import com.cleanroommc.modularui.screen.ModularPanel;
-import com.cleanroommc.modularui.screen.UISettings;
-import com.cleanroommc.modularui.value.sync.PanelSyncManager;
-import com.science.gtnl.common.gui.GTNLMui2Textures;
-import gregtech.api.modularui2.GTGuiTextures;
-import gregtech.common.modularui2.util.SteamTexture;
 import net.minecraft.util.StatCollector;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -57,26 +50,6 @@ public class SteamAssemblerBronze extends MTEBasicMachineBronze {
     @Override
     public RecipeMap<?> getRecipeMap() {
         return RecipeMaps.assemblerRecipes;
-    }
-
-    @Override
-    protected BasicUIProperties getUIProperties() {
-        if (this.getRecipeMap() != null) {
-            BasicUIProperties originalProperties = this.getRecipeMap().getFrontend().getUIProperties();
-            return originalProperties.toBuilder()
-                .maxItemInputs(this.mInputSlotCount)
-                .maxItemOutputs(this.mOutputItems.length)
-                .maxFluidInputs(Math.min(originalProperties.maxFluidInputs, 1))
-                .maxFluidOutputs(Math.min(originalProperties.maxFluidOutputs, 1))
-                .slotOverlaysSteamMUI2((_, isFluid, isOutput, _) ->
-                    !isFluid && !isOutput
-                        ? GTNLMui2Textures.OVERLAY_SLOT_ASSEMBLE_STEAM
-                        : SteamTexture.NONE)
-                .progressBarTextureSteamMUI2(GTGuiTextures.PROGRESSBAR_HAMMER_STEAM)
-                .build();
-        } else {
-            return BasicUIProperties.builder().maxItemInputs(this.mInputSlotCount).maxItemOutputs(this.mOutputItems.length).maxFluidInputs(this.getCapacity() != 0 ? 1 : 0).maxFluidOutputs(0).build();
-        }
     }
 
     @Override

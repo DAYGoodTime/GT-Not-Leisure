@@ -1,12 +1,9 @@
 package com.science.gtnl.common.gui;
 
 import com.cleanroommc.modularui.drawable.UITexture;
-import com.science.gtnl.mixins.early.gregtech.AccessorSteamTexture;
 import com.science.gtnl.utils.enums.ModList;
 
 import gregtech.api.enums.Mods;
-import gregtech.api.enums.TieredVariant;
-import gregtech.common.modularui2.util.SteamTexture;
 
 public class GTNLMui2Textures {
 
@@ -35,19 +32,4 @@ public class GTNLMui2Textures {
 
     public static final UITexture OVERLAY_BUTTON_PLANET_TELEPORT = UITexture
         .fullImage(Mods.GTNHIntergalactic.ID, "gui/overlay_button/planet_teleport.png");
-
-    public static final SteamTexture PROGRESSBAR_ASSEMBLE_STEAM =
-        steamFullImage("gui/progressbar/assemble_%s");
-
-    public static final SteamTexture OVERLAY_SLOT_ASSEMBLE_STEAM =
-        steamFullImage("gui/overlay_slot/circuit_%s");
-
-    public static SteamTexture steamFullImage(String pathPlaceholder) {
-        String id = ModList.ScienceNotLeisure.ID;
-        return AccessorSteamTexture.create(
-            UITexture.builder().location(id,String.format(pathPlaceholder, TieredVariant.BRONZE)).canApplyTheme().build(),
-            UITexture.builder().location(id,String.format(pathPlaceholder, TieredVariant.STEEL)).canApplyTheme().build(),
-            UITexture.builder().location(id,String.format(pathPlaceholder, TieredVariant.PRIMITIVE)).canApplyTheme().build()
-            );
-    }
 }

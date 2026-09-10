@@ -1,9 +1,5 @@
 package com.science.gtnl.common.machine.basicMachine;
 
-import com.science.gtnl.common.gui.GTNLMui2Textures;
-import gregtech.api.gui.modularui.GTUITextures;
-import gregtech.api.modularui2.GTGuiTextures;
-import gregtech.common.modularui2.util.SteamTexture;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -164,26 +160,6 @@ public class SteamAssemblerSteel extends MTEBasicMachineSteel {
                 .addIcon(Textures.BlockIcons.OVERLAY_BOTTOM_DISASSEMBLER_GLOW)
                 .glow()
                 .build() };
-    }
-
-    @Override
-    protected BasicUIProperties getUIProperties() {
-        if (this.getRecipeMap() != null) {
-            BasicUIProperties originalProperties = this.getRecipeMap().getFrontend().getUIProperties();
-            return originalProperties.toBuilder()
-                .maxItemInputs(this.mInputSlotCount)
-                .maxItemOutputs(this.mOutputItems.length)
-                .maxFluidInputs(Math.min(originalProperties.maxFluidInputs, 1))
-                .maxFluidOutputs(Math.min(originalProperties.maxFluidOutputs, 1))
-                .slotOverlaysSteamMUI2((_, isFluid, isOutput, _) ->
-                    !isFluid && !isOutput
-                        ? GTNLMui2Textures.OVERLAY_SLOT_ASSEMBLE_STEAM
-                        : SteamTexture.NONE)
-                .progressBarTextureSteamMUI2(GTNLMui2Textures.PROGRESSBAR_ASSEMBLE_STEAM)
-                .build();
-        } else {
-            return BasicUIProperties.builder().maxItemInputs(this.mInputSlotCount).maxItemOutputs(this.mOutputItems.length).maxFluidInputs(this.getCapacity() != 0 ? 1 : 0).maxFluidOutputs(0).build();
-        }
     }
 
     @Override
