@@ -19,7 +19,7 @@ public enum Mixins implements IMixins {
         "gregtech.AccessorGTRecipe", "gregtech.AccessorGTRecipeBuilder", "gregtech.AccessorGTRecipeWithAlt",
         "gregtech.AccessorGTLanguageManager", "gregtech.AccessorCommonMetaTileEntity",
         "gregtech.AccessorMetaTileEntity", "gregtech.AccessorMTEHatch", "gregtech.AccessorProcessingLogic",
-        "gregtech.AccessorRecipeDisplayInfo", "gregtech.MixinMTEBasicMachine", "gregtech.MixinBaseMetaTileEntity",
+        "gregtech.AccessorRecipeDisplayInfo","gregtech.AccessorSteamTexture", "gregtech.MixinMTEBasicMachine", "gregtech.MixinBaseMetaTileEntity",
         "gregtech.assLineRemover.MixinGTMod", "gregtech.assLineRemover.MixinGTRecipeBuilder",
         "gregtech.assLineRemover.MixinTTRecipeAdder", "energyMonitor.MixinBaseMetaTileEntityEnergyMonitor",
         "energyMonitor.MixinCommonMetaTileEntityEnergyMonitor"),
