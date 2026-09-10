@@ -1,6 +1,5 @@
 package com.science.gtnl.common.recipe.gregtech;
 
-import gtPlusPlus.core.material.MaterialsAlloy;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.science.gtnl.api.IRecipePool;
@@ -26,6 +25,7 @@ import gregtech.api.util.GTRecipeConstants;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.recipe.Scanning;
 import gtPlusPlus.core.material.MaterialMisc;
+import gtPlusPlus.core.material.MaterialsAlloy;
 import tectech.recipe.TTRecipeAdder;
 import tectech.thing.CustomItemList;
 
@@ -482,6 +482,7 @@ public class CircuitAssemblerRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(
+                GTUtility.getIntegratedCircuit(1),
                 ItemList.Circuit_Board_Fiberglass_Advanced.get(1L),
                 ItemList.Circuit_Chip_SoC2.get(1L),
                 GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Platinum, 8),
@@ -496,6 +497,7 @@ public class CircuitAssemblerRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(
+                GTUtility.getIntegratedCircuit(1),
                 ItemList.Circuit_Board_Epoxy_Advanced.get(1L),
                 ItemList.Circuit_Chip_SoC2.get(1L),
                 GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Electrum, 8),
