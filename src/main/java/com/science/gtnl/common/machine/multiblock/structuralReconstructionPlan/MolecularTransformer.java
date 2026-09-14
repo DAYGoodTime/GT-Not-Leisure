@@ -14,14 +14,13 @@ import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
 import com.gtnewhorizon.structurelib.structure.StructureUtility;
+import com.science.gtnl.api.casing.GTNLCasings;
 import com.science.gtnl.common.machine.multiMachineBase.GTMMultiMachineBase;
 import com.science.gtnl.common.material.GTNLRecipeMaps;
-import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.utils.StructureUtils;
 
-import gregtech.api.GregTechAPI;
+import gregtech.api.casing.Casings;
 import gregtech.api.enums.HatchElement;
-import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
@@ -65,7 +64,7 @@ public class MolecularTransformer extends GTMMultiMachineBase<MolecularTransform
 
     @Override
     public int getCasingTextureID() {
-        return StructureUtils.getTextureIndex(GregTechAPI.sBlockCasings8, 0);
+        return Casings.ChemicallyInertMachineCasing.getTextureId();
     }
 
     @Override
@@ -95,11 +94,11 @@ public class MolecularTransformer extends GTMMultiMachineBase<MolecularTransform
     public IStructureDefinition<MolecularTransformer> getStructureDefinition() {
         return StructureDefinition.<MolecularTransformer>builder()
             .addShape(STRUCTURE_PIECE_MAIN, StructureUtility.transpose(shape))
-            .addElement('A', StructureUtility.ofBlockAnyMeta(ItemList.ReinforcedGlass.getBlock()))
-            .addElement('B', StructureUtility.ofBlock(BlockLoader.metaCasing, 8))
-            .addElement('C', StructureUtility.ofBlock(GregTechAPI.sBlockCasings2, 0))
-            .addElement('D', StructureUtility.ofBlock(GregTechAPI.sBlockCasings2, 14))
-            .addElement('E', StructureUtility.ofBlock(GregTechAPI.sBlockCasings4, 0))
+            .addElement('A', Casings.ReinforcedGlass.asElement())
+            .addElement('B', GTNLCasings.MolybdenumDisilicideCoil.asElement())
+            .addElement('C', Casings.SolidSteelMachineCasing.asElement())
+            .addElement('D', Casings.TitaniumPipeCasing.asElement())
+            .addElement('E', Casings.RobustTungstenSteelMachineCasing.asElement())
             .addElement(
                 'F',
                 GTStructureUtility.buildHatchAdder(MolecularTransformer.class)
@@ -113,9 +112,8 @@ public class MolecularTransformer extends GTMMultiMachineBase<MolecularTransform
                         HatchElement.Energy.or(HatchElement.ExoticEnergy),
                         ParallelCon)
                     .buildAndChain(
-                        StructureUtility.onElementPass(
-                            x -> ++x.mCountCasing,
-                            StructureUtility.ofBlock(GregTechAPI.sBlockCasings8, 0))))
+                        StructureUtility
+                            .onElementPass(x -> ++x.mCountCasing, Casings.ChemicallyInertMachineCasing.asElement())))
             .addElement('G', GTStructureUtility.ofFrame(Materials.StainlessSteel))
             .build();
     }

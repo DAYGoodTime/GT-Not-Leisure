@@ -41,7 +41,7 @@ public class SteamManufacturerRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(
-                ItemList.ReinforcedGlass.get(3L),
+                ItemList.ReinforcedGlass.get(3),
                 GTOreDictUnificator.get(OrePrefixes.pipeSmall, Materials.Steel, 2),
                 GTOreDictUnificator.get(OrePrefixes.plateTriple, Materials.Silver, 3),
                 ItemList.Hull_HP_Bricks.get(1))
