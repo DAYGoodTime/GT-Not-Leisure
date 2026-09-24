@@ -276,7 +276,6 @@ public enum Mixins implements IMixins {
     TST(new MixinBuilder("Twist Space Technology Mixins")
         .addCommonMixins(
             "twistSpaceTechnology.MixinRecipeLoader",
-            "twistSpaceTechnology.MixinTST_OreProcessingFactory",
             "twistSpaceTechnology.MixinMM_DimensionallyTranscendentMatterPlasmaForgePrototypeMK2")
         .setPhase(Phase.LATE)
         .addRequiredMod(ModList.TwistSpaceTechnology)),
