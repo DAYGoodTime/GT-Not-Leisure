@@ -6,6 +6,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 import com.dreammaster.item.NHItemList;
 import com.science.gtnl.api.IRecipePool;
@@ -33,6 +34,7 @@ import gtPlusPlus.core.material.MaterialsAlloy;
 import gtPlusPlus.xmod.bop.blocks.BOPBlockRegistrator;
 import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 import tectech.thing.CustomItemList;
+import thaumcraft.common.config.ConfigBlocks;
 
 public class CraftingTableRecipes implements IRecipePool {
 
@@ -470,7 +472,7 @@ public class CraftingTableRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 ItemList.Hull_LV.get(1),
-                ItemList.ReinforcedGlass.get(2L),
+                ItemList.ReinforcedGlass.get(2),
                 new ItemStack(Items.bucket, 3),
                 Materials.Diamond.getGems(3))
             .itemOutputs(GregtechItemList.Hatch_Reservoir.get(1))
@@ -989,8 +991,7 @@ public class CraftingTableRecipes implements IRecipePool {
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.CardboardBox.get(1),
-            new Object[] { "ABA", "A A", "AAA", 'A', new ItemStack(Items.paper, 1), 'B',
-                new ItemStack(Items.slime_ball, 1) });
+            new Object[] { "ABA", "A A", "AAA", 'A', new ItemStack(Items.paper, 1), 'B', "slimeball" });
 
         GTModHandler.addCraftingRecipe(
             GTNLItemList.CardboardBox.get(1),
@@ -1199,6 +1200,33 @@ public class CraftingTableRecipes implements IRecipePool {
                 GTModHandler.getModItem(Mods.TinkerConstruct.ID, "materials", 1, 1), 'D',
                 GTModHandler.getModItem(Mods.TinkerConstruct.ID, "slime.pad", 1) });
 
+        if (Mods.RandomThings.isModLoaded()) {
+            ItemStack ectoplasm = GTModHandler.getModItem(Mods.RandomThings.ID, "ingredient", 1, 3);
+
+            GTModHandler.addCraftingRecipe(
+                GTNLItemList.SoulCardboardHelmet.get(1),
+                new Object[] { "ABA", "CDC", 'A', ectoplasm, 'B', new ItemStack(Items.leather_helmet, 1), 'C',
+                    GTNLItemList.CardboardBox.get(1), 'D', ToolDictNames.craftingToolHardHammer });
+
+            GTModHandler.addCraftingRecipe(
+                GTNLItemList.SoulCardboardChestplate.get(1),
+                new Object[] { "FBF", "CDC", "AEA", 'A', GTNLItemList.CardboardBox.get(1), 'B',
+                    ToolDictNames.craftingToolHardHammer, 'C',
+                    new ItemStack(Blocks.wool, 1, OreDictionary.WILDCARD_VALUE), 'D',
+                    new ItemStack(Items.leather_chestplate, 1), 'E', ectoplasm, 'F', new ItemStack(Blocks.web, 1) });
+
+            GTModHandler.addCraftingRecipe(
+                GTNLItemList.SoulCardboardLeggings.get(1),
+                new Object[] { "ABA", "CDC", "E E", 'A', new ItemStack(Blocks.web, 1), 'B',
+                    new ItemStack(Items.leather_leggings, 1), 'C', GTNLItemList.CardboardBox.get(1), 'D',
+                    ToolDictNames.craftingToolHardHammer, 'E', ectoplasm });
+
+            GTModHandler.addCraftingRecipe(
+                GTNLItemList.SoulCardboardBoots.get(1),
+                new Object[] { "ABA", "CDC", 'A', ectoplasm, 'B', new ItemStack(Items.leather_boots, 1), 'C',
+                    GTNLItemList.CardboardBox.get(1), 'D', ToolDictNames.craftingToolHardHammer });
+        }
+
         GTModHandler.addCraftingRecipe(
             GTNLItemList.SuperstrongSponge.get(1),
             new Object[] { "AAA", "BCD", "EEE", 'A', GTModHandler.getModItem(Mods.OpenBlocks.ID, "sponge", 1), 'B',
@@ -1396,6 +1424,30 @@ public class CraftingTableRecipes implements IRecipePool {
                 GTOreDictUnificator.get(OrePrefixes.pipeMedium, Materials.Titanium, 1), 'D',
                 GTModHandler.getModItem(IndustrialCraft2.ID, "blockReactorChamber", 1, 0), 'E',
                 OrePrefixes.circuit.get(Materials.EV), 'F', ItemList.Hull_EV.get(1) });
+
+        GTModHandler.addCraftingRecipe(
+            GTNLItemList.SmallEssentiaSmelteryLV.get(1),
+            recipeFlags,
+            new Object[] { "ABA", "CDC", "EFE", 'A', ItemList.Electric_Pump_LV.get(1), 'B',
+                OrePrefixes.circuit.get(Materials.LV), 'C', new ItemStack(ConfigBlocks.blockCosmeticOpaque, 1, 2), 'D',
+                ItemList.Hull_LV.get(1), 'E', new ItemStack(ConfigBlocks.blockStoneDevice, 1, 0), 'F',
+                GTOreDictUnificator.get(OrePrefixes.cableGt04, Materials.Tin, 1L) });
+
+        GTModHandler.addCraftingRecipe(
+            GTNLItemList.SmallEssentiaSmelteryMV.get(1),
+            recipeFlags,
+            new Object[] { "ABA", "CDC", "EFE", 'A', ItemList.Electric_Pump_MV.get(1), 'B',
+                OrePrefixes.circuit.get(Materials.MV), 'C', new ItemStack(ConfigBlocks.blockCosmeticOpaque, 1, 2), 'D',
+                ItemList.Hull_MV.get(1), 'E', new ItemStack(ConfigBlocks.blockStoneDevice, 1, 0), 'F',
+                GTOreDictUnificator.get(OrePrefixes.cableGt04, Materials.AnyCopper, 1L) });
+
+        GTModHandler.addCraftingRecipe(
+            GTNLItemList.SmallEssentiaSmelteryHV.get(1),
+            recipeFlags,
+            new Object[] { "ABA", "CDC", "EFE", 'A', ItemList.Electric_Pump_HV.get(1), 'B',
+                OrePrefixes.circuit.get(Materials.HV), 'C', new ItemStack(ConfigBlocks.blockCosmeticOpaque, 1, 2), 'D',
+                ItemList.Hull_HV.get(1), 'E', new ItemStack(ConfigBlocks.blockStoneDevice, 1, 0), 'F',
+                GTOreDictUnificator.get(OrePrefixes.cableGt04, Materials.Gold, 1L) });
 
         GTModHandler.addShapelessCraftingRecipe(
             GTNLItemList.PartSuperInterface.get(1),

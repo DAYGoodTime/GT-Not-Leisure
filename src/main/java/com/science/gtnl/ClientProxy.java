@@ -3,6 +3,7 @@ package com.science.gtnl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelSlime;
 import net.minecraft.client.renderer.entity.RenderLeashKnot;
+import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -13,6 +14,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import com.brandon3055.draconicevolution.client.handler.ParticleHandler;
+import com.gtnewhorizon.gtnhlib.client.model.loading.ModelRegistry;
 import com.science.gtnl.asm.GTNLEarlyCoreMod;
 import com.science.gtnl.client.GTNLInputHandler;
 import com.science.gtnl.client.GTNLTooltipManager;
@@ -34,6 +36,9 @@ import com.science.gtnl.client.gui.portableWorkbench.GuiPortableEnderChest;
 import com.science.gtnl.client.gui.portableWorkbench.GuiPortableFurnace;
 import com.science.gtnl.client.gui.portableWorkbench.GuiPortablePortableCompressedChest;
 import com.science.gtnl.client.gui.portableWorkbench.GuiPortablePortableInfinityChest;
+import com.science.gtnl.client.text.EffectTextRenderer;
+import com.science.gtnl.client.text.effect.BuiltinTextEffects;
+import com.science.gtnl.client.text.preview.TextEffectPreviewCommand;
 import com.science.gtnl.common.block.blocks.item.ItemBlockEternalGregTechWorkshopRender;
 import com.science.gtnl.common.block.blocks.item.ItemBlockNanoPhagocytosisPlantRender;
 import com.science.gtnl.common.block.blocks.tile.TileEntityArtificialStar;
@@ -62,6 +67,8 @@ import com.science.gtnl.common.part.PartMECellDock;
 import com.science.gtnl.common.part.PartSuperDualInterface;
 import com.science.gtnl.common.part.PartSuperInterface;
 import com.science.gtnl.common.render.SpoceRenderHandler;
+import com.science.gtnl.common.render.beamformer.BeamFormerItemRenderer;
+import com.science.gtnl.common.render.beamformer.BeamFormerModel;
 import com.science.gtnl.common.render.entity.NullPointerExceptionRender;
 import com.science.gtnl.common.render.entity.SaddleSlimeRender;
 import com.science.gtnl.common.render.entity.SteamRocketRender;
@@ -71,10 +78,12 @@ import com.science.gtnl.common.render.item.ItemNullPointerExceptionRender;
 import com.science.gtnl.common.render.item.ItemPlayerDollRenderer;
 import com.science.gtnl.common.render.item.ItemSteamRocketRenderer;
 import com.science.gtnl.common.render.item.ItemTwilightSwordRender;
+import com.science.gtnl.common.render.model.MEChiselModel;
 import com.science.gtnl.common.render.tile.EnderElevatorRenderer;
 import com.science.gtnl.common.render.tile.EternalGregTechWorkshopRenderer;
 import com.science.gtnl.common.render.tile.LaserBeconRenderer;
 import com.science.gtnl.common.render.tile.MultiEssentiaJarRenderer;
+import com.science.gtnl.common.render.tile.MultiEssentiaTubeRenderer;
 import com.science.gtnl.common.render.tile.NanoPhagocytosisPlantRenderer;
 import com.science.gtnl.common.render.tile.PlayerDollRenderer;
 import com.science.gtnl.common.render.tile.RealArtificialStarRenderer;
@@ -82,7 +91,9 @@ import com.science.gtnl.common.render.tile.WaterCandleRenderer;
 import com.science.gtnl.container.portableWorkbench.ContainerPortableAdvancedWorkbench;
 import com.science.gtnl.loader.BlockLoader;
 import com.science.gtnl.loader.ItemLoader;
+import com.science.gtnl.utils.detrav.DetravOreMarkerRenderer;
 import com.science.gtnl.utils.detrav.DetravScannerGUI;
+import com.science.gtnl.utils.detrav.DetravScannerInputHandler;
 import com.science.gtnl.utils.enums.GuiType;
 import com.science.gtnl.utils.event.SubscribeEventClientUtils;
 
@@ -117,17 +128,61 @@ public class ClientProxy extends CommonProxy {
 
     public static final SubscribeEventClientUtils SUBSCRIBE_EVENT_CLIENT_UTILS = new SubscribeEventClientUtils();
     public static final SpoceRenderHandler SPOCE_RENDER_HANDLER = new SpoceRenderHandler();
+    public static final DetravScannerInputHandler DETRAV_SCANNER_INPUT_HANDLER = new DetravScannerInputHandler();
     public static int WATER_CANDLE_RENDER_ID;
     public static int ENDER_ELEVATOR_RENDER_ID;
+    public static int MULTI_ESSENTIA_TUBE_RENDER_ID;
+
+    @Override
+    public void preInit(FMLPreInitializationEvent event) {
+        super.preInit(event);
+        ModelRegistry.registerModid(ScienceNotLeisure.MODID);
+
+        MinecraftForge.EVENT_BUS.register(SUBSCRIBE_EVENT_CLIENT_UTILS);
+        FMLCommonHandler.instance()
+            .bus()
+            .register(SUBSCRIBE_EVENT_CLIENT_UTILS);
+
+        MinecraftForge.EVENT_BUS.register(GTNLInputHandler.INSTANCE);
+        FMLCommonHandler.instance()
+            .bus()
+            .register(GTNLInputHandler.INSTANCE);
+
+        MinecraftForge.EVENT_BUS.register(new DetravOreMarkerRenderer());
+        MinecraftForge.EVENT_BUS.register(DETRAV_SCANNER_INPUT_HANDLER);
+
+        MinecraftForge.EVENT_BUS.register(SPOCE_RENDER_HANDLER);
+        FMLCommonHandler.instance()
+            .bus()
+            .register(SPOCE_RENDER_HANDLER);
+
+        MinecraftForge.EVENT_BUS.register(BeamFormerModel.INSTANCE);
+        FMLCommonHandler.instance()
+            .bus()
+            .register(BeamFormerModel.INSTANCE);
+
+        MinecraftForge.EVENT_BUS.register(MEChiselModel.INSTANCE);
+        FMLCommonHandler.instance()
+            .bus()
+            .register(MEChiselModel.INSTANCE);
+
+        GuiContainerManager.addTooltipHandler(new GTNLTooltipManager());
+
+        BuiltinTextEffects.register();
+        ((IReloadableResourceManager) Minecraft.getMinecraft()
+            .getResourceManager()).registerReloadListener(EffectTextRenderer.INSTANCE);
+
+        ClientCommandHandler.instance.registerCommand(new TextEffectPreviewCommand());
+        ClientCommandHandler.instance.registerCommand(new CommandSpoce());
+    }
 
     @Override
     public void init(FMLInitializationEvent event) {
         super.init(event);
 
-        ClientCommandHandler.instance.registerCommand(new CommandSpoce());
-
         WATER_CANDLE_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
         ENDER_ELEVATOR_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
+        MULTI_ESSENTIA_TUBE_RENDER_ID = RenderingRegistry.getNextAvailableRenderId();
 
         EnderElevatorRenderer enderElevatorRenderer = new EnderElevatorRenderer();
         RenderingRegistry.registerBlockHandler(enderElevatorRenderer);
@@ -142,18 +197,20 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerBlockHandler(new WaterCandleRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWaterCandle.class, new WaterCandleRenderer());
 
+        RenderingRegistry.registerBlockHandler(new MultiEssentiaTubeRenderer());
+
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLaserBeacon.class, new LaserBeconRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMultiEssentiaJar.class, new MultiEssentiaJarRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMultiEssentiaTube.class, new TileTubeBufferRenderer());
         ClientRegistry.bindTileEntitySpecialRenderer(
             TileEntityBeamFormer.class,
             new TESRWrapper(BlockLoader.beamFormer.getRenderer()));
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockLoader.beamFormer), ItemRenderer.INSTANCE);
+        MinecraftForgeClient
+            .registerItemRenderer(Item.getItemFromBlock(BlockLoader.beamFormer), new BeamFormerItemRenderer());
 
         MinecraftForgeClient
             .registerItemRenderer(Item.getItemFromBlock(BlockLoader.direPatternEncoder), ItemRenderer.INSTANCE);
 
-        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(BlockLoader.meChisel), ItemRenderer.INSTANCE);
         MinecraftForgeClient
             .registerItemRenderer(Item.getItemFromBlock(BlockLoader.superInterface), ItemRenderer.INSTANCE);
         MinecraftForgeClient
@@ -221,25 +278,6 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void completeInit(FMLLoadCompleteEvent event) {
         super.completeInit(event);
-    }
-
-    @Override
-    public void preInit(FMLPreInitializationEvent event) {
-        super.preInit(event);
-        MinecraftForge.EVENT_BUS.register(SUBSCRIBE_EVENT_CLIENT_UTILS);
-        FMLCommonHandler.instance()
-            .bus()
-            .register(SUBSCRIBE_EVENT_CLIENT_UTILS);
-        MinecraftForge.EVENT_BUS.register(GTNLInputHandler.INSTANCE);
-        FMLCommonHandler.instance()
-            .bus()
-            .register(GTNLInputHandler.INSTANCE);
-        GuiContainerManager.addTooltipHandler(new GTNLTooltipManager());
-
-        MinecraftForge.EVENT_BUS.register(SPOCE_RENDER_HANDLER);
-        FMLCommonHandler.instance()
-            .bus()
-            .register(SPOCE_RENDER_HANDLER);
     }
 
     @Override
