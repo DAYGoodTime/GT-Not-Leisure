@@ -8,7 +8,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraftforge.fluids.FluidStack;
 
+import com.Nxer.TwistSpaceTechnology.common.recipeMap.GTCMRecipe;
 import com.Nxer.TwistSpaceTechnology.recipe.machineRecipe.expanded.AssemblyLineWithoutResearchRecipePool;
+import com.Nxer.TwistSpaceTechnology.recipe.machineRecipe.expanded.CircuitAssemblyLineWithoutImprintRecipePool;
 import com.reavaritia.utils.enums.ReAvaItemList;
 import com.science.gtnl.api.IRecipePool;
 import com.science.gtnl.common.item.items.Stick;
@@ -69,6 +71,7 @@ import com.science.gtnl.common.recipe.gtnl.CactusWonderFakeRecipes;
 import com.science.gtnl.common.recipe.gtnl.CellRegulatorRecipes;
 import com.science.gtnl.common.recipe.gtnl.CircuitNanitesDataRecipes;
 import com.science.gtnl.common.recipe.gtnl.CraftingTableRecipes;
+import com.science.gtnl.common.recipe.gtnl.CrucibleCraftingRecipes;
 import com.science.gtnl.common.recipe.gtnl.DecayHastenerRecipes;
 import com.science.gtnl.common.recipe.gtnl.DesulfurizerRecipes;
 import com.science.gtnl.common.recipe.gtnl.ElectricNeutronActivatorRecipes;
@@ -193,7 +196,7 @@ public class RecipeLoader {
             new ElectricNeutronActivatorRecipes(), new ReactorProcessingUnitRecipes(),
             new NuclearSaltProcessingPlantRecipes(), new MaceratorRecipes(), new QuantumForceTransformerRecipes(),
             new MicroorganismMasterRecipes(), new SolarMuonCatalystRecipes(), new CircuitAssemblerRecipes(),
-            new CircuitAssemblyLineRecipes(), new WoodDistillationRecipes() };
+            new CircuitAssemblyLineRecipes(), new WoodDistillationRecipes(), new CrucibleCraftingRecipes() };
 
         for (IRecipePool recipePool : recipePools) {
             recipePool.loadRecipes();
@@ -223,7 +226,16 @@ public class RecipeLoader {
 
         if (ModList.TwistSpaceTechnology.isModLoaded()) {
             loadTSTMegaAssemblyLineRecipes();
+            loadTSTAdvCircuitAssemblyLineRecipes();
         }
+    }
+
+    @Optional.Method(modid = "TwistSpaceTechnology")
+    public static void loadTSTAdvCircuitAssemblyLineRecipes() {
+        GTCMRecipe.AdvCircuitAssemblyLineRecipeMap.getBackend()
+            .clearRecipes();
+        CircuitAssemblyLineWithoutImprintRecipePool.loadRecipes();
+        System.out.println("[GTNL] Register TwistSpaceTechnology AdvCircuitAssemblyLine recipes");
     }
 
     public static void loadPlasmaCentrifugeRecipes() {

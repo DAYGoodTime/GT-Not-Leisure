@@ -20,7 +20,7 @@ import gregtech.common.tileentities.machines.IDualInputHatch;
 @Mixin(
     value = MTEMultiBlockBase.class,
     targets = {
-        "com.Nxer.twistSpaceTechnology.common.modularizedMachine.ModularizedMachineLogic.MultiExecutionCoreMachineBase" },
+        "com.Nxer.TwistSpaceTechnology.common.modularizedMachine.ModularizedMachineLogic.MultiExecutionCoreMachineBase" },
     remap = false)
 public abstract class MixinMTEMultiBlockBaseRecipeProcessing {
 
