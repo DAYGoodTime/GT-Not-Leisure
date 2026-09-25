@@ -232,7 +232,7 @@ public class RecipeLoader {
 
     @Optional.Method(modid = "TwistSpaceTechnology")
     public static void loadTSTAdvCircuitAssemblyLineRecipes() {
-        GTCMRecipe.advCircuitAssemblyLineRecipes.getBackend()
+        GTCMRecipe.AdvCircuitAssemblyLineRecipeMap.getBackend()
             .clearRecipes();
         CircuitAssemblyLineWithoutImprintRecipePool.loadRecipes();
         System.out.println("[GTNL] Register TwistSpaceTechnology AdvCircuitAssemblyLine recipes");
