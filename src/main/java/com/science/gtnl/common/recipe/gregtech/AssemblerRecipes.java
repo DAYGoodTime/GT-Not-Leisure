@@ -43,6 +43,7 @@ import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTUtility;
+import gregtech.api.util.GTModHandler;
 import gtPlusPlus.core.item.crafting.ItemDummyResearch;
 import gtPlusPlus.core.material.MaterialsAlloy;
 import gtPlusPlus.core.material.MaterialsElements;

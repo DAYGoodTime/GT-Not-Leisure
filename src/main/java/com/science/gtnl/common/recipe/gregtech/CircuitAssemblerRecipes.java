@@ -483,7 +483,6 @@ public class CircuitAssemblerRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(
-                GTUtility.getIntegratedCircuit(1),
                 ItemList.Circuit_Board_Fiberglass_Advanced.get(1L),
                 ItemList.Circuit_Chip_SoC2.get(1L),
                 GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Platinum, 8),
@@ -498,7 +497,6 @@ public class CircuitAssemblerRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .setNEIDesc("Remove Change by GTNotLeisure")
             .itemInputs(
-                GTUtility.getIntegratedCircuit(1),
                 ItemList.Circuit_Board_Epoxy_Advanced.get(1L),
                 ItemList.Circuit_Chip_SoC2.get(1L),
                 GTOreDictUnificator.get(OrePrefixes.wireFine, Materials.Electrum, 8),

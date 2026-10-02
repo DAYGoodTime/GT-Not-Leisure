@@ -254,6 +254,23 @@ public class RemoveRecipes {
         );
 
         for (GTRecipe recipe : circuitAssemblerRecipe.getAllRecipes()) {
+            boolean isTargetProcessor = Arrays.stream(recipe.mOutputs)
+                .anyMatch(
+                    output -> output != null
+                        && (output.isItemEqual(ItemList.Circuit_Quantumprocessor.get(1))
+                            || output.isItemEqual(ItemList.Circuit_Nanoprocessor.get(1))));
+
+            boolean usesSixSoC2 = Arrays.stream(recipe.mInputs)
+                .anyMatch(
+                    input -> input != null
+                        && input.isItemEqual(ItemList.Circuit_Chip_SoC2.get(1))
+                        && input.stackSize == 6);
+
+            if (isTargetProcessor && usesSixSoC2) {
+                recipesToRemoveFromCircuitAssembler.add(recipe);
+                continue;
+            }
+
             for (ItemStack output : recipe.mOutputs) {
                 if (output == null) continue;
                 for (ItemStack target : targetOutputs) {
