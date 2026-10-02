@@ -29,3 +29,17 @@ runConfigs.forEach { (taskName, path) ->
         }
     }
 }
+
+listOf("runClient25", "runServer25").forEach { taskName ->
+    tasks.named<JavaExec>(taskName) {
+        // Optional and grouped injectors may legitimately match nothing, as in production runs.
+        jvmArgumentProviders.add(org.gradle.process.CommandLineArgumentProvider {
+            listOf("-Dmixin.debug.countInjections=false")
+        })
+    }
+}
+
+tasks.named<JavaExec>("runServer25") {
+    // Angelica detects the side by client class presence; the merged development jar contains both sides.
+    classpath = classpath.filter { !it.name.startsWith("Angelica-", ignoreCase = true) }
+}
