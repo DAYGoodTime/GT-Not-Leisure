@@ -484,9 +484,15 @@ public class Incubator extends MultiMachineBase<Incubator> implements ISurvivalC
         }
     }
 
+    private static int getRendererColorRGB(BioCulture culture) {
+        // BartWorks transmits only RGB bytes; alpha bits would make the packet checksum fail on the client.
+        return (culture == null ? Color.DARK_GRAY.getRGB() : culture.getColorRGB()) & 0xFFFFFF;
+    }
+
     public void sendPackagesOrRenewRenderer(int x, int y, int z, BioCulture lCulture) {
         int xDir = this.getXDir();
         int zDir = this.getZDir();
+        int colorRGB = getRendererColorRGB(lCulture);
 
         Incubator.staticColorMap.removeInt(
             new Coords(
@@ -515,7 +521,7 @@ public class Incubator extends MultiMachineBase<Incubator> implements ISurvivalC
                         .getZCoord(),
                 this.getBaseMetaTileEntity()
                     .getWorld().provider.dimensionId),
-            lCulture == null ? Color.DARK_GRAY.getRGB() : lCulture.getColorRGB());
+            colorRGB);
 
         if (SideReference.Side.Server) {
             GTValues.NW.sendPacketToAllPlayersInRange(
@@ -534,7 +540,7 @@ public class Incubator extends MultiMachineBase<Incubator> implements ISurvivalC
                                 .getZCoord(),
                         this.getBaseMetaTileEntity()
                             .getWorld().provider.dimensionId),
-                    lCulture == null ? Color.DARK_GRAY.getRGB() : lCulture.getColorRGB(),
+                    colorRGB,
                     true),
                 this.getBaseMetaTileEntity()
                     .getXCoord(),
@@ -557,7 +563,7 @@ public class Incubator extends MultiMachineBase<Incubator> implements ISurvivalC
                                 .getZCoord(),
                         this.getBaseMetaTileEntity()
                             .getWorld().provider.dimensionId),
-                    lCulture == null ? Color.DARK_GRAY.getRGB() : lCulture.getColorRGB(),
+                    colorRGB,
                     false),
                 this.getBaseMetaTileEntity()
                     .getXCoord(),
@@ -689,6 +695,7 @@ public class Incubator extends MultiMachineBase<Incubator> implements ISurvivalC
 
     public void sendRenderPackets(int xDir, int zDir) {
         if (SideReference.Side.Server) {
+            int colorRGB = getRendererColorRGB(this.mCulture);
             for (int x = -1; x < 2; x++) {
                 for (int y = 2; y < 4; y++) {
                     for (int z = -1; z < 2; z++) {
@@ -707,7 +714,7 @@ public class Incubator extends MultiMachineBase<Incubator> implements ISurvivalC
                                             .getZCoord(),
                                     this.getBaseMetaTileEntity()
                                         .getWorld().provider.dimensionId),
-                                this.mCulture == null ? Color.DARK_GRAY.getRGB() : this.mCulture.getColorRGB(),
+                                colorRGB,
                                 true),
                             this.getBaseMetaTileEntity()
                                 .getXCoord(),
