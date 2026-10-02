@@ -511,6 +511,14 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
             .filter(GTUtility::isOre)
             .toList();
         ItemStack output = this.nextOre();
+        List<ItemStack> selectedOres = this.selected.getStacks();
+        boolean matchesFilter = selectedOres.stream()
+            .anyMatch(is -> GTUtility.areStacksEqual(is, output))
+            || inputOres.stream()
+                .anyMatch(is -> GTUtility.areStacksEqual(is, output));
+        boolean filterEmpty = selectedOres.stream()
+            .noneMatch(Objects::nonNull) && inputOres.isEmpty();
+        boolean shouldOutput = filterEmpty || this.blacklist != matchesFilter;
 
         GTNLOverclockCalculator calculator = new GTNLOverclockCalculator().setEUt(getMaxInputEu())
             .setRecipeEUt(Math.abs(Math.toIntExact(GTValues.V[this.getMinTier()])))
@@ -535,10 +543,7 @@ public abstract class MixinMTEVoidMinerBase extends MTEEnhancedMultiBlockBase<Mi
             ItemStack stackPart = output.copy();
             stackPart.stackSize = stackSize;
 
-            if (inputOres.isEmpty() || (this.blacklist && inputOres.stream()
-                .noneMatch(is -> GTUtility.areStacksEqual(is, output)))
-                || (!this.blacklist && inputOres.stream()
-                    .anyMatch(is -> GTUtility.areStacksEqual(is, output)))) {
+            if (shouldOutput) {
                 this.addOutputPartial(stackPart);
             }
 
