@@ -17,9 +17,9 @@ public enum Mixins implements IMixins {
 
     GREGTECH_EARLY(Side.COMMON, "gregtech.AccessorMTETieredMachineBlock", "gregtech.AccessorEyeOfHarmonyRecipe",
         "gregtech.AccessorGTRecipe", "gregtech.AccessorGTRecipeBuilder", "gregtech.AccessorGTRecipeWithAlt",
-        "gregtech.MixinGTRecipe", "gregtech.AccessorGTLanguageManager", "gregtech.AccessorCommonMetaTileEntity",
-        "gregtech.AccessorMetaTileEntity", "gregtech.AccessorMTEHatch", "gregtech.AccessorProcessingLogic",
-        "gregtech.AccessorRecipeDisplayInfo", "gregtech.MixinBaseMetaTileEntity", "gregtech.assLineRemover.MixinGTMod",
+        "gregtech.MixinGTRecipe", "gregtech.AccessorGTLanguageManager", "gregtech.AccessorMTEHatch",
+        "gregtech.AccessorProcessingLogic", "gregtech.AccessorRecipeDisplayInfo", "gregtech.MixinBaseMetaTileEntity",
+        "gregtech.MixinCommonMetaTileEntity", "gregtech.MixinMetaTileEntity", "gregtech.assLineRemover.MixinGTMod",
         "gregtech.assLineRemover.MixinGTRecipeBuilder", "gregtech.assLineRemover.MixinTTRecipeAdder",
         "energyMonitor.MixinBaseMetaTileEntityEnergyMonitor", "energyMonitor.MixinCommonMetaTileEntityEnergyMonitor"),
 
@@ -179,6 +179,23 @@ public enum Mixins implements IMixins {
             "appliedEnergistics.assembler.MixinGuiPatternTerm",
             "appliedEnergistics.quamtumComputer.MixinGuiCraftingCPUTable")
         .setPhase(Phase.LATE)),
+
+    APPLIED_ENERGISTICS_PROCESSING_PATTERN(new MixinBuilder("Applied Energistics processing pattern capacity mixins")
+        .addCommonMixins(
+            "appliedEnergistics.processingPattern.MixinPartPatternTerminal",
+            "appliedEnergistics.processingPattern.MixinPartPatternTerminalEx",
+            "appliedEnergistics.processingPattern.MixinContainerPatternTerm",
+            "appliedEnergistics.processingPattern.MixinContainerPatternTermEx",
+            "appliedEnergistics.processingPattern.MixinWirelessPatternTerminalGuiObject")
+        .addClientMixins("appliedEnergistics.processingPattern.MixinGuiPatternTermEx")
+        .setPhase(Phase.LATE)
+        .addRequiredMod(ModList.AppliedEnergistics)),
+
+    APPLIED_ENERGISTICS_PROCESSING_PATTERN_NEI(new MixinBuilder("Applied Energistics processing pattern NEI layout")
+        .addClientMixins("appliedEnergistics.processingPattern.MixinNEIPatternViewHandler")
+        .setPhase(Phase.LATE)
+        .addRequiredMod(ModList.AppliedEnergistics)
+        .addRequiredMod(ModList.NotEnoughItems)),
 
     THAUMCRAFT_CLIENT(
         new MixinBuilder("Thaumcraft client compatibility mixins").addClientMixins("thaumcraft.MixinTileJarRenderer")
