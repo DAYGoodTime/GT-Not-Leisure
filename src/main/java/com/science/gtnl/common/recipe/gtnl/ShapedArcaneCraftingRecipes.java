@@ -77,7 +77,8 @@ public class ShapedArcaneCraftingRecipes implements IRecipePool {
                 IAA,
                 TCRecipeTools.checkInputSpecial(inputItems.toArray(new ItemStack[0])),
                 new ItemStack[] { output },
-                recipe.getInputAspects(),
+                recipe.getInputAspects()
+                    .copy(),
                 recipe.getResearch(),
                 ARCANE_VIS,
                 ARCANE_RESEARCH);
@@ -116,7 +117,8 @@ public class ShapedArcaneCraftingRecipes implements IRecipePool {
                 IAA,
                 TCRecipeTools.checkInputSpecial(inputItems.toArray(new ItemStack[0])),
                 new ItemStack[] { output },
-                recipe.getInputAspects(),
+                recipe.getInputAspects()
+                    .copy(),
                 recipe.getResearch(),
                 ARCANE_VIS,
                 ARCANE_RESEARCH);

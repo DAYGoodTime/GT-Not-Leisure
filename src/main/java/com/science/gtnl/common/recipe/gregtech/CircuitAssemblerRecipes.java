@@ -508,7 +508,6 @@ public class CircuitAssemblerRecipes implements IRecipePool {
             .duration(100)
             .eut(TierEU.RECIPE_LuV)
             .addTo(CAR);
-
         loadCircuitRecipes();
     }
 

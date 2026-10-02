@@ -54,12 +54,15 @@ public class InfusionCraftingRecipes implements IRecipePool {
                 IIC,
                 createInputs(Recipe),
                 new ItemStack[] { Recipe.getOutput() },
-                Recipe.getInputAspects(),
+                Recipe.getInputAspects()
+                    .copy(),
                 Recipe.getResearch(),
                 INFUSION_ASPECTS,
                 INFUSION_RESEARCH,
-                TCRecipeTools
-                    .computeAspectDuration(Recipe.getInputAspects(), TCRecipeTools.INFUSION_DURATION_TICKS_PER_ASPECT),
+                TCRecipeTools.computeAspectDuration(
+                    Recipe.getInputAspects()
+                        .copy(),
+                    TCRecipeTools.INFUSION_DURATION_TICKS_PER_ASPECT),
                 TierEU.RECIPE_LV);
         }
     }
