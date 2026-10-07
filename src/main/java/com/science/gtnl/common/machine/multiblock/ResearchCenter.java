@@ -34,6 +34,7 @@ import org.jetbrains.annotations.NotNull;
 import com.cleanroommc.modularui.utils.item.IItemHandlerModifiable;
 import com.cleanroommc.modularui.utils.item.ItemStackHandler;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
+import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.science.gtnl.api.mixinHelper.IResearchStationMarker;
 import com.science.gtnl.common.gui.modularui.ResearchCenterGui;
@@ -105,7 +106,7 @@ public class ResearchCenter extends MTEResearchStation implements IResearchStati
                 .buildAndChain(Casings.RadiantNaquadahAlloyCasing.asElement()))
         .addElement('D', Casings.StabilizedNaquadahWaterPlantCasing.asElement())
         .addElement('E', ofBlock(steelBars(), 0))
-        .addElement('F', ofBlock(chiselNeonite(), 3))
+        .addElement('F', chiselNeoniteElement())
         .build();
 
     private static Block steelBars() {
@@ -113,9 +114,9 @@ public class ResearchCenter extends MTEResearchStation implements IResearchStati
         return block == null ? Blocks.iron_bars : block;
     }
 
-    private static Block chiselNeonite() {
+    private static IStructureElement<MTEResearchStation> chiselNeoniteElement() {
         Block block = GameRegistry.findBlock("chisel", "neonite");
-        return block == null ? Blocks.glowstone : block;
+        return block == null ? ofBlock(Blocks.glowstone, 0) : ofBlock(block, 3);
     }
 
     private int currentParallel = 1;
