@@ -42,6 +42,7 @@ import com.science.gtnl.utils.StructureUtils;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import gregtech.api.casing.Casings;
+import gregtech.api.enums.HatchElement;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
@@ -764,13 +765,19 @@ public class ResearchCenter extends MTEResearchStation implements IResearchStati
             return false;
         }
 
-        ItemStack singleItem = GTUtility.copyAmount(1, stack);
-        for (int i = 0; i < stack.stackSize; i++) {
-            if (!depleteInput(singleItem)) {
-                return false;
+        // Scanned fluid containers must be consumed as items, not converted into fluid inputs.
+        int remaining = stack.stackSize;
+        for (ItemStack input : getStoredInputs()) {
+            if (GTUtility.areStacksEqual(stack, input)) {
+                int consumed = Math.min(remaining, input.stackSize);
+                input.stackSize -= consumed;
+                remaining -= consumed;
+                if (remaining == 0) {
+                    return true;
+                }
             }
         }
-        return true;
+        return remaining == 0;
     }
 
     private int countDepletableItems(ItemStack stack) {
