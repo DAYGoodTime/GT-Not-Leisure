@@ -2,7 +2,8 @@ package com.science.gtnl.loader;
 
 import static com.science.gtnl.utils.CardboardBoxUtils.addBoxBlacklist;
 
-import gregtech.api.enums.VoltageIndex;
+import java.util.List;
+
 import net.blay09.mods.craftingtweaks.api.CraftingTweaksAPI;
 import net.blay09.mods.craftingtweaks.api.SimpleTweakProvider;
 import net.minecraft.init.Blocks;
@@ -36,13 +37,12 @@ import gregtech.api.enums.GTValues;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.Mods;
 import gregtech.api.enums.OrePrefixes;
+import gregtech.api.enums.VoltageIndex;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GlassTier;
 import gregtech.common.misc.WirelessNetworkManager;
 import micdoodle8.mods.galacticraft.api.recipe.RocketFuels;
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
-
-import java.util.List;
 
 public class MaterialLoader {
 
@@ -208,8 +208,8 @@ public class MaterialLoader {
 
     private static void ensureMaxGlassDescription() {
         List<String> tierLangKeys = GlassTier.getTierLangKeys();
-        if(tierLangKeys.size() <= VoltageIndex.MAX //MAX
-        ){
+        if (tierLangKeys.size() <= VoltageIndex.MAX // MAX
+        ) {
             tierLangKeys.add("GT5U.MBTT.Glass.14");
         }
     }
