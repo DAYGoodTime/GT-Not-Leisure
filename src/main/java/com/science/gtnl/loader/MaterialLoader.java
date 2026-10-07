@@ -2,6 +2,7 @@ package com.science.gtnl.loader;
 
 import static com.science.gtnl.utils.CardboardBoxUtils.addBoxBlacklist;
 
+import gregtech.api.enums.VoltageIndex;
 import net.blay09.mods.craftingtweaks.api.CraftingTweaksAPI;
 import net.blay09.mods.craftingtweaks.api.SimpleTweakProvider;
 import net.minecraft.init.Blocks;
@@ -40,6 +41,8 @@ import gregtech.api.util.GlassTier;
 import gregtech.common.misc.WirelessNetworkManager;
 import micdoodle8.mods.galacticraft.api.recipe.RocketFuels;
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
+
+import java.util.List;
 
 public class MaterialLoader {
 
@@ -91,6 +94,8 @@ public class MaterialLoader {
         OrePrefixes.ingot.addFamiliarPrefix(OrePrefixes.ingotHot);
         OrePrefixes.ingotHot.addFamiliarPrefix(OrePrefixes.nugget);
         OrePrefixes.ingotHot.addFamiliarPrefix(OrePrefixes.ingot);
+
+        ensureMaxGlassDescription();
     }
 
     public static void loadCompleteInit() {
@@ -200,4 +205,13 @@ public class MaterialLoader {
         addBoxBlacklist(ModsItemlist.IC2NuclearReactor.get(1));
         addBoxBlacklist(ModsItemlist.IC2ReactorChamberAnyDamage.get(1));
     }
+
+    private static void ensureMaxGlassDescription() {
+        List<String> tierLangKeys = GlassTier.getTierLangKeys();
+        if(tierLangKeys.size() <= VoltageIndex.MAX //MAX
+        ){
+            tierLangKeys.add("GT5U.MBTT.Glass.14");
+        }
+    }
+
 }
