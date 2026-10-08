@@ -14,9 +14,11 @@ import static gregtech.api.util.GTStructureUtility.chainAllGlasses;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -41,6 +43,14 @@ import com.science.gtnl.common.gui.modularui.ResearchCenterGui;
 import com.science.gtnl.mixins.late.tecTech.AccessorMTEResearchStation;
 import com.science.gtnl.utils.StructureUtils;
 
+import appeng.api.config.Actionable;
+import appeng.api.networking.IGrid;
+import appeng.api.networking.security.IActionHost;
+import appeng.api.networking.security.MachineSource;
+import appeng.api.storage.data.IAEItemStack;
+import appeng.me.GridAccessException;
+import appeng.util.Platform;
+import appeng.util.item.AEItemStack;
 import cpw.mods.fml.common.registry.GameRegistry;
 import gregtech.api.casing.Casings;
 import gregtech.api.enums.HatchElement;
@@ -49,6 +59,7 @@ import gregtech.api.enums.Textures;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.metatileentity.implementations.MTEHatchInputBus;
 import gregtech.api.modularui2.GTGuiTextures;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
@@ -62,6 +73,7 @@ import gregtech.api.util.GTScannerResult;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.MultiblockTooltipBuilder;
 import gregtech.common.gui.modularui.multiblock.base.MTEMultiBlockBaseGui;
+import gregtech.common.tileentities.machines.MTEHatchInputBusME;
 import tectech.recipe.TecTechRecipeMaps;
 import tectech.thing.metaTileEntity.multi.MTEResearchStation;
 import tectech.thing.metaTileEntity.multi.base.TTMultiblockBase;
@@ -320,15 +332,18 @@ public class ResearchCenter extends MTEResearchStation implements IResearchStati
 
     @Override
     public void outputAfterRecipe_EM() {
-        for (ItemStack researchStackToConsume : this.researchStacksToConsume) {
-            if (!depleteInputsAcrossSlots(researchStackToConsume)) {
-                this.mOutputItems = null;
-                return;
-            }
-        }
-        if (this.dataSticksToConsume > 0 && !depleteDataSticks(this.dataSticksToConsume)) {
+        if (!consumePendingInputs()) {
             this.mOutputItems = null;
         }
+    }
+
+    private boolean consumePendingInputs() {
+        for (ItemStack researchStackToConsume : this.researchStacksToConsume) {
+            if (!depleteInputsAcrossSlots(researchStackToConsume)) {
+                return false;
+            }
+        }
+        return this.dataSticksToConsume <= 0 || depleteDataSticks(this.dataSticksToConsume);
     }
 
     @Override
@@ -768,28 +783,102 @@ public class ResearchCenter extends MTEResearchStation implements IResearchStati
 
         // Scanned fluid containers must be consumed as items, not converted into fluid inputs.
         int remaining = stack.stackSize;
-        for (ItemStack input : getStoredInputs()) {
+        for (ItemStack input : getDepletableResearchInputs()) {
             if (GTUtility.areStacksEqual(stack, input)) {
                 int consumed = Math.min(remaining, input.stackSize);
                 input.stackSize -= consumed;
                 remaining -= consumed;
+                if (input.stackSize <= 0 && input == getStackInSlot(getControllerSlotIndex())) {
+                    mInventory[getControllerSlotIndex()] = null;
+                }
                 if (remaining == 0) {
                     return true;
                 }
             }
         }
-        return remaining == 0;
+        // Completion runs outside recipe processing; ME's extracted stacks are only check-time snapshots.
+        return extractMEInputs(stack, remaining, Actionable.MODULATE) == remaining;
     }
 
     private int countDepletableItems(ItemStack stack) {
         int count = 0;
-        ArrayList<ItemStack> inputs = getStoredInputs();
-        for (ItemStack input : inputs) {
+        for (ItemStack input : getDepletableResearchInputs()) {
             if (GTUtility.areStacksEqual(stack, input)) {
                 count += input.stackSize;
             }
         }
-        return count;
+        if (count >= stack.stackSize) {
+            return count;
+        }
+        return count + extractMEInputs(stack, stack.stackSize - count, Actionable.SIMULATE);
+    }
+
+    private int extractMEInputs(ItemStack stack, int amount, Actionable action) {
+        int remaining = amount;
+        Set<IGrid> visitedGrids = new HashSet<>();
+        for (MTEHatchInputBus bus : GTUtility.validMTEList(mInputBusses)) {
+            if (!(bus instanceof MTEHatchInputBusME meBus) || !meBus.isAllowedToWork()
+                || !isConfiguredMEInput(meBus, stack)) {
+                continue;
+            }
+            try {
+                // Multiple stocking buses on one grid expose the same inventory, not additional items.
+                IGrid grid = meBus.getProxy()
+                    .getGrid();
+                if (visitedGrids.contains(grid)) {
+                    continue;
+                }
+                IAEItemStack extracted = Platform.poweredExtraction(
+                    meBus.getProxy()
+                        .getEnergy(),
+                    meBus.getProxy()
+                        .getStorage()
+                        .getItemInventory(),
+                    AEItemStack.create(stack)
+                        .setStackSize(remaining),
+                    new MachineSource((IActionHost) meBus.getBaseMetaTileEntity()),
+                    action);
+                if (extracted != null) {
+                    visitedGrids.add(grid);
+                    remaining -= (int) extracted.getStackSize();
+                    if (remaining == 0) {
+                        break;
+                    }
+                }
+            } catch (GridAccessException ignored) {
+                // A disconnected grid cannot supply inputs at completion.
+            }
+        }
+        return amount - remaining;
+    }
+
+    private boolean isConfiguredMEInput(MTEHatchInputBusME bus, ItemStack stack) {
+        for (int slot = 0; slot < MTEHatchInputBusME.SLOT_COUNT; slot++) {
+            if (GTUtility.areStacksEqual(stack, bus.getSlotConfig(slot))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private List<ItemStack> getDepletableResearchInputs() {
+        ArrayList<ItemStack> inputs = getStoredInputs();
+        ItemStack controllerStack = getStackInSlot(getControllerSlotIndex());
+        // Filter markers live in lockedOutputHandler, never in this consumable inventory.
+        // Data containers retain the separate depleteDataSticks matching rules.
+        if (GTUtility.isStackValid(controllerStack) && !isDataContainer(controllerStack)) {
+            boolean alreadyIncluded = false;
+            for (ItemStack input : inputs) {
+                if (input == controllerStack) {
+                    alreadyIncluded = true;
+                    break;
+                }
+            }
+            if (!alreadyIncluded) {
+                inputs.add(controllerStack);
+            }
+        }
+        return inputs;
     }
 
     private void setPacketLossDecayFrom(long value) {
