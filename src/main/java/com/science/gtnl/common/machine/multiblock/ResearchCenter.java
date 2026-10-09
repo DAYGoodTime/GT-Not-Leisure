@@ -40,6 +40,7 @@ import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.science.gtnl.api.mixinHelper.IResearchStationMarker;
 import com.science.gtnl.common.gui.modularui.ResearchCenterGui;
+import com.science.gtnl.mixins.late.gregtech.AccessorMTEHatchInputBusME;
 import com.science.gtnl.mixins.late.tecTech.AccessorMTEResearchStation;
 import com.science.gtnl.utils.StructureUtils;
 
@@ -853,8 +854,9 @@ public class ResearchCenter extends MTEResearchStation implements IResearchStati
     }
 
     private boolean isConfiguredMEInput(MTEHatchInputBusME bus, ItemStack stack) {
-        for (int slot = 0; slot < MTEHatchInputBusME.SLOT_COUNT; slot++) {
-            if (GTUtility.areStacksEqual(stack, bus.getSlotConfig(slot))) {
+        // GT5U 5.09.54.133 has the same slot configs but no public getSlotConfig accessor.
+        for (MTEHatchInputBusME.Slot slot : ((AccessorMTEHatchInputBusME) bus).getSlots()) {
+            if (slot != null && GTUtility.areStacksEqual(stack, slot.config)) {
                 return true;
             }
         }

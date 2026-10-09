@@ -128,6 +128,7 @@ public enum Mixins implements IMixins {
             "draconicEvolution.AccessorCustomArmorHandler",
             "draconicEvolution.MixinCustomArmorHandler",
             "draconicEvolution.MixinReactorExplosion",
+            "gregtech.AccessorMTEHatchInputBusME",
             "gregtech.MixinEyeOfHarmonyRecipeStorage",
             "gregtech.MixinGodForgeMath",
             "gregtech.MixinGTOreDictUnificator",
