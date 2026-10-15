@@ -21,7 +21,6 @@ import com.science.gtnl.common.gui.recipe.FallingTowerFrontend;
 import com.science.gtnl.common.gui.recipe.GTNLLogoFrontend;
 import com.science.gtnl.common.gui.recipe.GeneralFrontend;
 import com.science.gtnl.common.gui.recipe.IndustrialInfusionCraftingRecipesFrontend;
-import com.science.gtnl.common.gui.recipe.RocketAssemblerBackend;
 import com.science.gtnl.common.gui.recipe.RocketAssemblerFrontend;
 import com.science.gtnl.common.gui.recipe.SpaceMinerFrontend;
 import com.science.gtnl.common.gui.recipe.SteamGateAssemblerBackend;
@@ -65,9 +64,7 @@ public class GTNLRecipeMaps {
         .maxIO(16, 16, 16, 16)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(GeneralFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.GenerationEarthEngine.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.GenerationEarthEngine.get(1)))
         .build();
 
     public static final RecipeMap<RecipeMapBackend> FallingTowerRecipes = Mods.BloodMagic.isModLoaded()
@@ -75,9 +72,7 @@ public class GTNLRecipeMaps {
             .maxIO(1, 81, 0, 0)
             .progressBar(GTUITextures.PROGRESSBAR_COMPRESS)
             .frontend(FallingTowerFrontend::new)
-            .neiHandlerInfo(
-                builder -> builder.setDisplayStack(GTNLItemList.BloodSoulSacrificialArray.get(1))
-                    .setMaxRecipesPerPage(1))
+            .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.BloodSoulSacrificialArray.get(1)))
             .build()
         : null;
 
@@ -113,9 +108,7 @@ public class GTNLRecipeMaps {
         .maxIO(4, 36, 1, 0)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(GeneralFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.TeleportationArrayToAlfheim.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.TeleportationArrayToAlfheim.get(1)))
         .build();
 
     public static final RecipeMap<RecipeMapBackend> RuneAltarRecipes = RecipeMapBuilder
@@ -179,9 +172,7 @@ public class GTNLRecipeMaps {
         .maxIO(4, 4, 4, 12)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(GeneralFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.PetrochemicalPlant.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.PetrochemicalPlant.get(1)))
         .build();
 
     public static final RecipeMap<RecipeMapBackend> SmeltingMixingFurnaceRecipes = RecipeMapBuilder
@@ -189,9 +180,7 @@ public class GTNLRecipeMaps {
         .maxIO(8, 4, 16, 4)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(GeneralFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.SmeltingMixingFurnace.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.SmeltingMixingFurnace.get(1)))
         .build();
 
     public static final RecipeMap<RecipeMapBackend> RareEarthCentrifugalRecipes = RecipeMapBuilder
@@ -199,9 +188,15 @@ public class GTNLRecipeMaps {
         .maxIO(1, 17, 1, 1)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(GeneralFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.RareEarthCentrifugal.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.RareEarthCentrifugal.get(1)))
+        .build();
+
+    public static RecipeMap<RecipeMapBackend> IndustrialCrucibleRecipes = RecipeMapBuilder
+        .of("gtnl.recipe.industrial_crucible")
+        .maxIO(2, 1, 0, 0)
+        .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
+        .frontend(IndustrialInfusionCraftingRecipesFrontend::new)
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.IndustrialCrucible.get(1)))
         .build();
 
     public static RecipeMap<RecipeMapBackend> IndustrialCrucibleRecipes = RecipeMapBuilder
@@ -233,9 +228,7 @@ public class GTNLRecipeMaps {
         .maxIO(4, 16, 0, 0)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(GeneralFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.LibraryOfRuina.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.LibraryOfRuina.get(1)))
         .build();
 
     public static RecipeMap<RecipeMapBackend> FishingGroundRecipes = RecipeMapBuilder
@@ -243,9 +236,7 @@ public class GTNLRecipeMaps {
         .maxIO(4, 32, 4, 0)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(GeneralFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.LibraryOfRuina.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.LibraryOfRuina.get(1)))
         .build();
 
     public static RecipeMap<RecipeMapBackend> IndustrialInfusionCraftingRecipes = RecipeMapBuilder
@@ -254,9 +245,7 @@ public class GTNLRecipeMaps {
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(IndustrialInfusionCraftingRecipesFrontend::new)
         .neiTransferRect(100, 45, 18, 72)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.IndustrialArcaneAssembler.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.IndustrialArcaneAssembler.get(1)))
         .build();
 
     public static RecipeMap<RecipeMapBackend> IsaMillRecipes = RecipeMapBuilder.of("gtnl.recipe.isa_mill")
@@ -281,9 +270,7 @@ public class GTNLRecipeMaps {
         .maxIO(1, 1, 1, 16)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(GeneralFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.WoodDistillation.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.WoodDistillation.get(1)))
         .build();
 
     public static RecipeMap<RecipeMapBackend> MolecularTransformerRecipes = RecipeMapBuilder
@@ -356,9 +343,7 @@ public class GTNLRecipeMaps {
         .maxIO(8, 12, 4, 4)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(GeneralFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.PlatinumBasedTreatment.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.PlatinumBasedTreatment.get(1)))
         .build();
 
     public static RecipeMap<RecipeMapBackend> ShallowChemicalCouplingRecipes = RecipeMapBuilder
@@ -366,9 +351,7 @@ public class GTNLRecipeMaps {
         .maxIO(16, 16, 16, 16)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(GeneralFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.ShallowChemicalCoupling.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.ShallowChemicalCoupling.get(1)))
         .neiSpecialInfoFormatter(HeatingCoilSpecialValueFormatter.INSTANCE)
         .build();
 
@@ -383,9 +366,7 @@ public class GTNLRecipeMaps {
         .dontUseProgressBar()
         .addSpecialTexture(70, 11, 72, 40, GGUITextures.PICTURE_COMPONENT_ASSLINE)
         .frontend(ComponentAssemblyLineFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.TreeDiagram.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.TreeDiagram.get(1)))
         .build();
 
     public static final RecipeMap<SteamGateAssemblerBackend> SteamGateAssemblerRecipes = RecipeMapBuilder
@@ -397,9 +378,7 @@ public class GTNLRecipeMaps {
             (index, isFluid, isOutput, isSpecial) -> !isFluid && !isOutput ? GTUITextures.OVERLAY_SLOT_COMPRESSOR_STEAM
                 : null)
         .progressBarSteam(GTUITextures.PROGRESSBAR_COMPRESS_STEAM)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.SteamGateAssembler.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.SteamGateAssembler.get(1)))
         .build();
 
     public static final RecipeMap<RecipeMapBackend> CactusWonderFakeRecipes = RecipeMapBuilder
@@ -480,9 +459,7 @@ public class GTNLRecipeMaps {
         .maxIO(1, 36, 0, 1)
         .progressBar(GTUITextures.PROGRESSBAR_COMPRESS)
         .frontend(ExtremeExtremeEntityCrusherFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.HighwayToHell.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.HighwayToHell.get(1)))
         .build();
 
     public static RecipeMap<RecipeMapBackend> LargeBioLabRecipes = RecipeMapBuilder.of("gtnl.recipe.large_bio_lab")
@@ -524,9 +501,7 @@ public class GTNLRecipeMaps {
         .maxIO(1, 20, 0, 0)
         .progressBar(GTUITextures.PROGRESSBAR_COMPRESS)
         .frontend(GeneralFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.ShimmerFluidBlock.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.ShimmerFluidBlock.get(1)))
         .build();
 
     public static RecipeMap<RecipeMapBackend> PlasmaCentrifugeRecipes = RecipeMapBuilder
@@ -534,9 +509,7 @@ public class GTNLRecipeMaps {
         .maxIO(1, 0, 4, 20)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(GeneralFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.LargeGasCollector.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.LargeGasCollector.get(1)))
         .build();
 
     public static RecipeMap<RecipeMapBackend> PlasmaCondensationRecipes = RecipeMapBuilder
@@ -557,23 +530,20 @@ public class GTNLRecipeMaps {
 
     public static final RecipeMap<RecipeMapBackend> ElectrocellGeneratorRecipes = RecipeMapBuilder
         .of("gtnl.recipe.electrocell_generator")
-        .maxIO(2, 1, 1, 2)
+        .maxIO(2, 1, 1, 1)
         .progressBar(GTUITextures.PROGRESSBAR_SIFT, ProgressBar.Direction.DOWN)
         .progressBarPos(78, 26)
         .frontend(ElectrocellGeneratorFrontend::new)
         .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.ElectrocellGenerator.get(1)))
         .build();
 
-    public static final RecipeMap<RocketAssemblerBackend> RocketAssemblerRecipes = RecipeMapBuilder
-        .of("gtnl.recipe.rocket_assembler", RocketAssemblerBackend::new)
-        .maxIO(52, 1, 0, 0)
+    public static final RecipeMap<RecipeMapBackend> RocketAssemblerRecipes = RecipeMapBuilder
+        .of("gtnl.recipe.rocket_assembler")
+        .maxIO(53, 1, 0, 0)
         .dontUseProgressBar()
         .frontend(RocketAssemblerFrontend::new)
         .useSpecialSlot()
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.RocketAssembler.get(1))
-                .setMaxRecipesPerPage(1))
-        .disableRegisterNEI()
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.RocketAssembler.get(1)))
         .build();
 
     public static final RecipeMap<RecipeMapBackend> CircuitNanitesDataRecipes = RecipeMapBuilder
@@ -618,9 +588,7 @@ public class GTNLRecipeMaps {
         .maxIO(16, 16, 8, 8)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(GeneralFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.NanitesIntegratedProcessingCenter.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.NanitesIntegratedProcessingCenter.get(1)))
         .neiRecipeComparator(
             Comparator
                 .<GTRecipe, NanitesIntegratedProcessingRecipesData>comparing(
@@ -679,9 +647,7 @@ public class GTNLRecipeMaps {
         .maxIO(1, 0, 8, 1)
         .progressBar(GTUITextures.PROGRESSBAR_ARROW_MULTIPLE)
         .frontend(GeneralFrontend::new)
-        .neiHandlerInfo(
-            builder -> builder.setDisplayStack(GTNLItemList.FOGSolarMuonCatalystModule.get(1))
-                .setMaxRecipesPerPage(1))
+        .neiHandlerInfo(builder -> builder.setDisplayStack(GTNLItemList.FOGSolarMuonCatalystModule.get(1)))
         .neiRecipeComparator(
             Comparator
                 .<GTRecipe, Boolean>comparing(
