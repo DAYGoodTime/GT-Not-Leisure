@@ -625,10 +625,6 @@ public class ResearchCenter extends MTEResearchStation implements IResearchStati
     }
 
     private static GTRecipe findFakeScannerRecipe(ItemStack researchStack) {
-        GTRecipe recipe = findFakeRecipeInMap(TecTechRecipeMaps.researchStationFakeRecipes, researchStack);
-        if (recipe != null) {
-            return recipe;
-        }
         return findFakeRecipeInMap(RecipeMaps.scannerFakeRecipes, researchStack);
     }
 
@@ -642,11 +638,6 @@ public class ResearchCenter extends MTEResearchStation implements IResearchStati
     }
 
     private static GTRecipe.RecipeAssemblyLine findAssemblyLineRecipe(ItemStack researchStack) {
-        for (GTRecipe.RecipeAssemblyLine assRecipe : TecTechRecipeMaps.researchableALRecipeList) {
-            if (GTUtility.areStacksEqual(assRecipe.mResearchItem, researchStack, true)) {
-                return assRecipe;
-            }
-        }
         for (GTRecipe.RecipeAssemblyLine assRecipe : GTRecipe.RecipeAssemblyLine.sAssemblylineRecipes) {
             if (GTUtility.areStacksEqual(assRecipe.mResearchItem, researchStack, true)) {
                 return assRecipe;
