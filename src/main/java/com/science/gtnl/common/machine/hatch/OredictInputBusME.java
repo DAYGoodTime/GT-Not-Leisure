@@ -560,7 +560,6 @@ public class OredictInputBusME extends MTEHatchInputBusME implements IRecipeProc
         return isSuper ? ALL_SLOT_COUNT : super.getSizeInventory();
     }
 
-
     @Override
     public void onExplosion() {
         if (!isSuper) {
